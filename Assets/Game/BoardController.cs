@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Unity.Netcode;
 
 public enum CellState
 {
@@ -239,7 +240,7 @@ public class BoardController : MonoBehaviour
         return true;
     }
 
-    private void PlaceShip()
+  /*  private void PlaceShip()
     {
         if (!CanPlaceShip(
             currentPosition,
@@ -269,7 +270,53 @@ public class BoardController : MonoBehaviour
 
         RefreshBoard();
     }
+*/
+  private void PlaceShip()
+  {
+      if (!CanPlaceShip(
+              currentPosition,
+              currentShipSize,
+              horizontal))
+      {
+          return;
+      }
 
+      for (int i = 0; i < currentShipSize; i++)
+      {
+          Vector2Int position =
+              GetShipCellPosition(i);
+
+          // Lokalna plansza
+          grid[position.x, position.y] =
+              CellState.Ship;
+
+          // Synchronizacja sieciowa
+          if (NetworkBoardSync.LocalInstance != null)
+          {
+              NetworkBoardSync.LocalInstance.SendShipPosition(
+                  position.x,
+                  position.y
+              );
+          }
+          else
+          {
+              Debug.LogWarning(
+                  "NetworkBoardSync.LocalInstance jest null!"
+              );
+          }
+      }
+
+      shipsPlaced[currentShipSize - 1] = true;
+      placingShip = false;
+
+      if (currentShipButton != null)
+      {
+          currentShipButton.interactable = false;
+          currentShipButton = null;
+      }
+
+      RefreshBoard();
+  }
     private void RefreshBoard()
     {
         for (int x = 0; x < BoardSize; x++)
