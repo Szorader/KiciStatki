@@ -602,7 +602,7 @@ public class MultiplayerManager : MonoBehaviour
     // JOIN GAME
     // =========================================================
 
-    public async Task<bool> JoinGame(string sessionId)
+    /*public async Task<bool> JoinGame(string sessionId)
     {
         if (!IsInitialized)
         {
@@ -631,12 +631,49 @@ public class MultiplayerManager : MonoBehaviour
             );
 
             return true;
-        }
-        catch (SessionException e)
+        }*/
+        /*catch (SessionException e)
         {
             Debug.LogError(
                 "Nie udało się dołączyć:\n" +
                 e.Message
+            );
+
+            StatusChanged?.Invoke(
+                "Nie można dołączyć do pokoju."
+            );
+
+            return false;
+        }*/
+    /*
+        catch (SessionException e)
+        {
+            Debug.LogError(
+                "========================================"
+            );
+
+            Debug.LogError(
+                "BŁĄD DOŁĄCZANIA DO SESJI"
+            );
+
+            Debug.LogError(
+                "Message: " + e.Message
+            );
+
+            Debug.LogError(
+                "Error: " + e.Error
+            );
+
+            Debug.LogError(
+                "Exception:\n" + e
+            );
+
+            Debug.LogError(
+                "Session ID: " + sessionId
+            );
+
+            Debug.LogError(
+                "========================================"
             );
 
             StatusChanged?.Invoke(
@@ -659,7 +696,138 @@ public class MultiplayerManager : MonoBehaviour
             return false;
         }
     }
+*/
+    public async Task<bool> JoinGame(string sessionId)
+{
+    if (!IsInitialized)
+    {
+        await InitializeServices();
+    }
 
+    if (string.IsNullOrEmpty(sessionId))
+    {
+        Debug.LogError("Session ID jest pusty.");
+        return false;
+    }
+
+    try
+    {
+        StatusChanged?.Invoke(
+            "Dołączanie do pokoju..."
+        );
+
+        Debug.Log(
+            "Próba dołączenia do Session ID: " +
+            sessionId
+        );
+
+        CurrentSession =
+            await MultiplayerService.Instance
+                .JoinSessionByIdAsync(sessionId);
+
+        if (CurrentSession == null)
+        {
+            Debug.LogError(
+                "JoinSessionByIdAsync zwrócił null."
+            );
+
+            return false;
+        }
+
+        Debug.Log(
+            "========================================"
+        );
+
+        Debug.Log(
+            "DOŁĄCZONO DO SESJI"
+        );
+
+        Debug.Log(
+            "Nazwa: " +
+            CurrentSession.Name
+        );
+
+        Debug.Log(
+            "ID: " +
+            CurrentSession.Id
+        );
+
+        Debug.Log(
+            "Code: " +
+            CurrentSession.Code
+        );
+
+        Debug.Log(
+            "========================================"
+        );
+
+        StatusChanged?.Invoke(
+            "Połączono z pokojem."
+        );
+
+        return true;
+    }
+    catch (SessionException e)
+    {
+        Debug.LogError(
+            "========================================"
+        );
+
+        Debug.LogError(
+            "BŁĄD DOŁĄCZANIA DO SESJI"
+        );
+
+        Debug.LogError(
+            "Message: " + e.Message
+        );
+
+        Debug.LogError(
+            "Error: " + e.Error
+        );
+
+        Debug.LogError(
+            "Exception:\n" + e
+        );
+
+        Debug.LogError(
+            "Session ID: " + sessionId
+        );
+
+        Debug.LogError(
+            "========================================"
+        );
+
+        StatusChanged?.Invoke(
+            "Nie można dołączyć do pokoju."
+        );
+
+        return false;
+    }
+    catch (Exception e)
+    {
+        Debug.LogError(
+            "========================================"
+        );
+
+        Debug.LogError(
+            "OGÓLNY BŁĄD DOŁĄCZANIA"
+        );
+
+        Debug.LogError(
+            e
+        );
+
+        Debug.LogError(
+            "========================================"
+        );
+
+        StatusChanged?.Invoke(
+            "Wystąpił błąd podczas dołączania."
+        );
+
+        return false;
+    }
+}
     // =========================================================
     // LEAVE
     // =========================================================
