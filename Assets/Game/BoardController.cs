@@ -12,12 +12,49 @@ public enum CellState
     Miss
 }
 
+public enum ShipPart
+{
+    None,
+    Single,
+    Start,
+    Middle1,
+    Middle2,
+    Middle3,
+    End
+}
+
 public class BoardController : MonoBehaviour
 {
+    [Header("Board")]
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private TileBase emptyTile;
-    [SerializeField] private TileBase shipTile;
 
+    [Header("Ship 1")]
+    [SerializeField] private TileBase ship1Tile;
+
+    [Header("Ship 2")]
+    [SerializeField] private TileBase ship2StartTile;
+    [SerializeField] private TileBase ship2EndTile;
+
+    [Header("Ship 3")]
+    [SerializeField] private TileBase ship3StartTile;
+    [SerializeField] private TileBase ship3MiddleTile;
+    [SerializeField] private TileBase ship3EndTile;
+
+    [Header("Ship 4")]
+    [SerializeField] private TileBase ship4StartTile;
+    [SerializeField] private TileBase ship4Middle1Tile;
+    [SerializeField] private TileBase ship4Middle2Tile;
+    [SerializeField] private TileBase ship4EndTile;
+
+    [Header("Ship 5")]
+    [SerializeField] private TileBase ship5StartTile;
+    [SerializeField] private TileBase ship5Middle1Tile;
+    [SerializeField] private TileBase ship5Middle2Tile;
+    [SerializeField] private TileBase ship5Middle3Tile;
+    [SerializeField] private TileBase ship5EndTile;
+
+    [Header("Ship Buttons")]
     [SerializeField] private Button[] shipButtons = new Button[5];
 
     private const int BoardSize = 10;
@@ -26,13 +63,29 @@ public class BoardController : MonoBehaviour
     private readonly CellState[,] grid =
         new CellState[BoardSize, BoardSize];
 
-    private int currentShipSize;
-    private bool placingShip;
-    private bool horizontal = true;
-    private Vector2Int currentPosition;
+    private readonly ShipPart[,] shipParts =
+        new ShipPart[BoardSize, BoardSize];
+
+    private readonly int[,] shipSizes =
+        new int[BoardSize, BoardSize];
+
+    private readonly int[,] shipRotations =
+        new int[BoardSize, BoardSize];
 
     private readonly bool[] shipsPlaced =
         new bool[MaxShipSize];
+
+    private int currentShipSize;
+
+    private bool placingShip;
+
+    // 0   = 0°
+    // 1   = 90°
+    // 2   = 180°
+    // 3   = 270°
+    private int currentRotation;
+
+    private Vector2Int currentPosition;
 
     private Button currentShipButton;
 
@@ -55,20 +108,42 @@ public class BoardController : MonoBehaviour
         }
     }
 
+    // =========================================================
+    // INPUT
+    // =========================================================
+
     private void HandleRotation()
     {
         float scroll = Input.mouseScrollDelta.y;
 
         if (scroll > 0)
         {
-            horizontal = false;
-            ShowShipPreview();
+            RotateShipClockwise();
         }
         else if (scroll < 0)
         {
-            horizontal = true;
-            ShowShipPreview();
+            RotateShipCounterClockwise();
         }
+    }
+
+    private void RotateShipClockwise()
+    {
+        currentRotation++;
+
+        if (currentRotation >= 4)
+            currentRotation = 0;
+
+        ShowShipPreview();
+    }
+
+    private void RotateShipCounterClockwise()
+    {
+        currentRotation--;
+
+        if (currentRotation < 0)
+            currentRotation = 3;
+
+        ShowShipPreview();
     }
 
     private void HandleMouseClick()
@@ -82,6 +157,10 @@ public class BoardController : MonoBehaviour
         PlaceShip();
     }
 
+    // =========================================================
+    // BOARD
+    // =========================================================
+
     private void GenerateBoard()
     {
         tilemap.ClearAllTiles();
@@ -91,14 +170,29 @@ public class BoardController : MonoBehaviour
             for (int y = 0; y < BoardSize; y++)
             {
                 grid[x, y] = CellState.Empty;
+                shipParts[x, y] = ShipPart.None;
+                shipSizes[x, y] = 0;
+                shipRotations[x, y] = 0;
+
+                Vector3Int tilePosition =
+                    new Vector3Int(x, y, 0);
 
                 tilemap.SetTile(
-                    new Vector3Int(x, y, 0),
+                    tilePosition,
                     emptyTile
+                );
+
+                tilemap.SetTransformMatrix(
+                    tilePosition,
+                    Matrix4x4.identity
                 );
             }
         }
     }
+
+    // =========================================================
+    // SHIP BUTTONS
+    // =========================================================
 
     public void StartPlacingShip1()
     {
@@ -134,13 +228,26 @@ public class BoardController : MonoBehaviour
             return;
 
         currentShipSize = size;
-        currentShipButton = shipButtons[size - 1];
+
+        currentShipButton =
+            shipButtons[size - 1];
 
         placingShip = true;
-        horizontal = true;
+
+        // Zawsze zaczynamy od 0°
+        currentRotation = 0;
+
+        currentPosition = new Vector2Int(
+            0,
+            0
+        );
 
         ShowShipPreview();
     }
+
+    // =========================================================
+    // POSITION
+    // =========================================================
 
     private void UpdateShipPosition()
     {
@@ -153,12 +260,15 @@ public class BoardController : MonoBehaviour
             );
 
         Vector3Int cellPosition =
-            tilemap.WorldToCell(mouseWorldPosition);
+            tilemap.WorldToCell(
+                mouseWorldPosition
+            );
 
-        Vector2Int newPosition = new Vector2Int(
-            cellPosition.x,
-            cellPosition.y
-        );
+        Vector2Int newPosition =
+            new Vector2Int(
+                cellPosition.x,
+                cellPosition.y
+            );
 
         if (newPosition == currentPosition)
             return;
@@ -168,6 +278,10 @@ public class BoardController : MonoBehaviour
         ShowShipPreview();
     }
 
+    // =========================================================
+    // PREVIEW
+    // =========================================================
+
     private void ShowShipPreview()
     {
         RefreshBoard();
@@ -175,7 +289,7 @@ public class BoardController : MonoBehaviour
         if (!CanPlaceShip(
             currentPosition,
             currentShipSize,
-            horizontal))
+            currentRotation))
         {
             return;
         }
@@ -185,52 +299,110 @@ public class BoardController : MonoBehaviour
             Vector2Int position =
                 GetShipCellPosition(i);
 
-            tilemap.SetTile(
+            Vector3Int tilePosition =
                 new Vector3Int(
                     position.x,
                     position.y,
                     0
-                ),
-                shipTile
+                );
+
+            TileBase tile =
+                GetCurrentShipTile(i);
+
+            tilemap.SetTile(
+                tilePosition,
+                tile
+            );
+
+            SetTileRotation(
+                tilePosition,
+                currentRotation
             );
         }
     }
+
+    // =========================================================
+    // SHIP POSITION
+    // =========================================================
 
     private Vector2Int GetShipCellPosition(int index)
     {
-        if (horizontal)
+        switch (currentRotation)
         {
-            return new Vector2Int(
-                currentPosition.x + index,
-                currentPosition.y
-            );
-        }
+            // 0°
+            // START -> END
+            case 0:
+                return new Vector2Int(
+                    currentPosition.x + index,
+                    currentPosition.y
+                );
 
-        return new Vector2Int(
-            currentPosition.x,
-            currentPosition.y + index
-        );
+            // 90°
+            // START
+            //   |
+            //   |
+            // END
+            case 1:
+                return new Vector2Int(
+                    currentPosition.x,
+                    currentPosition.y + index
+                );
+
+            // 180°
+            // END <- START
+            case 2:
+                return new Vector2Int(
+                    currentPosition.x - index,
+                    currentPosition.y
+                );
+
+            // 270°
+            // END
+            //  |
+            //  |
+            // START
+            case 3:
+                return new Vector2Int(
+                    currentPosition.x,
+                    currentPosition.y - index
+                );
+
+            default:
+                return currentPosition;
+        }
     }
+
+    // =========================================================
+    // VALIDATION
+    // =========================================================
 
     private bool CanPlaceShip(
         Vector2Int position,
         int size,
-        bool isHorizontal)
+        int rotation)
     {
         for (int i = 0; i < size; i++)
         {
-            int x = position.x +
-                    (isHorizontal ? i : 0);
+            Vector2Int shipPosition =
+                GetShipCellPositionForRotation(
+                    position,
+                    i,
+                    rotation
+                );
 
-            int y = position.y +
-                    (isHorizontal ? 0 : i);
+            int x = shipPosition.x;
+            int y = shipPosition.y;
 
-            if (x < 0 || x >= BoardSize ||
-                y < 0 || y >= BoardSize)
+            // Poza planszą
+            if (x < 0 ||
+                x >= BoardSize ||
+                y < 0 ||
+                y >= BoardSize)
             {
                 return false;
             }
 
+            // Zajęte pole
             if (grid[x, y] != CellState.Empty)
             {
                 return false;
@@ -240,12 +412,56 @@ public class BoardController : MonoBehaviour
         return true;
     }
 
-  /*  private void PlaceShip()
+    private Vector2Int GetShipCellPositionForRotation(
+        Vector2Int position,
+        int index,
+        int rotation)
+    {
+        switch (rotation)
+        {
+            // 0°
+            case 0:
+                return new Vector2Int(
+                    position.x + index,
+                    position.y
+                );
+
+            // 90°
+            case 1:
+                return new Vector2Int(
+                    position.x,
+                    position.y + index
+                );
+
+            // 180°
+            case 2:
+                return new Vector2Int(
+                    position.x - index,
+                    position.y
+                );
+
+            // 270°
+            case 3:
+                return new Vector2Int(
+                    position.x,
+                    position.y - index
+                );
+
+            default:
+                return position;
+        }
+    }
+
+    // =========================================================
+    // PLACE SHIP
+    // =========================================================
+
+    private void PlaceShip()
     {
         if (!CanPlaceShip(
             currentPosition,
             currentShipSize,
-            horizontal))
+            currentRotation))
         {
             return;
         }
@@ -257,9 +473,35 @@ public class BoardController : MonoBehaviour
 
             grid[position.x, position.y] =
                 CellState.Ship;
+
+            shipParts[position.x, position.y] =
+                GetShipPart(i);
+
+            shipSizes[position.x, position.y] =
+                currentShipSize;
+
+            shipRotations[position.x, position.y] =
+                currentRotation;
+
+            // Synchronizacja sieciowa
+            if (NetworkBoardSync.LocalInstance != null)
+            {
+                NetworkBoardSync.LocalInstance
+                    .SendShipPosition(
+                        position.x,
+                        position.y
+                    );
+            }
+            else
+            {
+                Debug.LogWarning(
+                    "NetworkBoardSync.LocalInstance jest null!"
+                );
+            }
         }
 
         shipsPlaced[currentShipSize - 1] = true;
+
         placingShip = false;
 
         if (currentShipButton != null)
@@ -270,69 +512,262 @@ public class BoardController : MonoBehaviour
 
         RefreshBoard();
     }
-*/
-  private void PlaceShip()
-  {
-      if (!CanPlaceShip(
-              currentPosition,
-              currentShipSize,
-              horizontal))
-      {
-          return;
-      }
 
-      for (int i = 0; i < currentShipSize; i++)
-      {
-          Vector2Int position =
-              GetShipCellPosition(i);
+    // =========================================================
+    // SHIP PART
+    // =========================================================
 
-          // Lokalna plansza
-          grid[position.x, position.y] =
-              CellState.Ship;
+    private ShipPart GetShipPart(int index)
+    {
+        if (currentShipSize == 1)
+            return ShipPart.Single;
 
-          // Synchronizacja sieciowa
-          if (NetworkBoardSync.LocalInstance != null)
-          {
-              NetworkBoardSync.LocalInstance.SendShipPosition(
-                  position.x,
-                  position.y
-              );
-          }
-          else
-          {
-              Debug.LogWarning(
-                  "NetworkBoardSync.LocalInstance jest null!"
-              );
-          }
-      }
+        if (index == 0)
+            return ShipPart.Start;
 
-      shipsPlaced[currentShipSize - 1] = true;
-      placingShip = false;
+        if (index == currentShipSize - 1)
+            return ShipPart.End;
 
-      if (currentShipButton != null)
-      {
-          currentShipButton.interactable = false;
-          currentShipButton = null;
-      }
+        switch (index)
+        {
+            case 1:
+                return ShipPart.Middle1;
 
-      RefreshBoard();
-  }
+            case 2:
+                return ShipPart.Middle2;
+
+            case 3:
+                return ShipPart.Middle3;
+
+            default:
+                return ShipPart.None;
+        }
+    }
+
+    // =========================================================
+    // CURRENT SHIP TILE
+    // =========================================================
+
+    private TileBase GetCurrentShipTile(int index)
+    {
+        switch (currentShipSize)
+        {
+            // -------------------------------------------------
+            // STATEK 1
+            // -------------------------------------------------
+
+            case 1:
+                return ship1Tile;
+
+            // -------------------------------------------------
+            // STATEK 2
+            // -------------------------------------------------
+
+            case 2:
+
+                if (index == 0)
+                    return ship2StartTile;
+
+                return ship2EndTile;
+
+            // -------------------------------------------------
+            // STATEK 3
+            // -------------------------------------------------
+
+            case 3:
+
+                if (index == 0)
+                    return ship3StartTile;
+
+                if (index == 1)
+                    return ship3MiddleTile;
+
+                return ship3EndTile;
+
+            // -------------------------------------------------
+            // STATEK 4
+            // -------------------------------------------------
+
+            case 4:
+
+                if (index == 0)
+                    return ship4StartTile;
+
+                if (index == 1)
+                    return ship4Middle1Tile;
+
+                if (index == 2)
+                    return ship4Middle2Tile;
+
+                return ship4EndTile;
+
+            // -------------------------------------------------
+            // STATEK 5
+            // -------------------------------------------------
+
+            case 5:
+
+                if (index == 0)
+                    return ship5StartTile;
+
+                if (index == 1)
+                    return ship5Middle1Tile;
+
+                if (index == 2)
+                    return ship5Middle2Tile;
+
+                if (index == 3)
+                    return ship5Middle3Tile;
+
+                return ship5EndTile;
+
+            default:
+                return null;
+        }
+    }
+
+    // =========================================================
+    // STORED SHIP TILE
+    // =========================================================
+
+    private TileBase GetStoredShipTile(
+        int x,
+        int y)
+    {
+        int size =
+            shipSizes[x, y];
+
+        ShipPart part =
+            shipParts[x, y];
+
+        switch (size)
+        {
+            case 1:
+                return ship1Tile;
+
+            case 2:
+
+                if (part == ShipPart.Start)
+                    return ship2StartTile;
+
+                return ship2EndTile;
+
+            case 3:
+
+                if (part == ShipPart.Start)
+                    return ship3StartTile;
+
+                if (part == ShipPart.Middle1)
+                    return ship3MiddleTile;
+
+                return ship3EndTile;
+
+            case 4:
+
+                if (part == ShipPart.Start)
+                    return ship4StartTile;
+
+                if (part == ShipPart.Middle1)
+                    return ship4Middle1Tile;
+
+                if (part == ShipPart.Middle2)
+                    return ship4Middle2Tile;
+
+                return ship4EndTile;
+
+            case 5:
+
+                if (part == ShipPart.Start)
+                    return ship5StartTile;
+
+                if (part == ShipPart.Middle1)
+                    return ship5Middle1Tile;
+
+                if (part == ShipPart.Middle2)
+                    return ship5Middle2Tile;
+
+                if (part == ShipPart.Middle3)
+                    return ship5Middle3Tile;
+
+                return ship5EndTile;
+
+            default:
+                return emptyTile;
+        }
+    }
+
+    // =========================================================
+    // REFRESH BOARD
+    // =========================================================
+
     private void RefreshBoard()
     {
         for (int x = 0; x < BoardSize; x++)
         {
             for (int y = 0; y < BoardSize; y++)
             {
-                TileBase tile =
-                    grid[x, y] == CellState.Ship
-                        ? shipTile
-                        : emptyTile;
+                Vector3Int tilePosition =
+                    new Vector3Int(x, y, 0);
 
-                tilemap.SetTile(
-                    new Vector3Int(x, y, 0),
-                    tile
-                );
+                if (grid[x, y] ==
+                    CellState.Ship)
+                {
+                    TileBase tile =
+                        GetStoredShipTile(
+                            x,
+                            y
+                        );
+
+                    tilemap.SetTile(
+                        tilePosition,
+                        tile
+                    );
+
+                    SetTileRotation(
+                        tilePosition,
+                        shipRotations[x, y]
+                    );
+                }
+                else
+                {
+                    tilemap.SetTile(
+                        tilePosition,
+                        emptyTile
+                    );
+
+                    tilemap.SetTransformMatrix(
+                        tilePosition,
+                        Matrix4x4.identity
+                    );
+                }
             }
         }
+    }
+
+    // =========================================================
+    // TILE ROTATION
+    // =========================================================
+
+    private void SetTileRotation(
+        Vector3Int position,
+        int rotation)
+    {
+        float angle = rotation * 90f;
+
+        Quaternion quaternion =
+            Quaternion.Euler(
+                0f,
+                0f,
+                angle
+            );
+
+        tilemap.SetTransformMatrix(
+            position,
+            Matrix4x4.TRS(
+                Vector3.zero,
+                quaternion,
+                Vector3.one
+            )
+        );
     }
 }

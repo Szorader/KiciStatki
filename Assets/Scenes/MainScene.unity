@@ -409,11 +409,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5197337401418024204, guid: 49b049e92bde3ad4098267edd0eff425, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 581.5
+      value: -204
       objectReference: {fileID: 0}
     - target: {fileID: 5197337401418024204, guid: 49b049e92bde3ad4098267edd0eff425, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -94
+      value: -494
       objectReference: {fileID: 0}
     - target: {fileID: 5197337401418024204, guid: 49b049e92bde3ad4098267edd0eff425, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -462,8 +462,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoardController
   tilemap: {fileID: 425318833}
-  emptyTile: {fileID: 11400000, guid: 289d32a2cefd6244b8d4df3266183d00, type: 2}
-  shipTile: {fileID: 11400000, guid: 49380e9f8cd39104c95bce2de310f282, type: 2}
+  emptyTile: {fileID: 11400000, guid: dfcacade9944b724487e4dfb1d5f08f5, type: 2}
+  ship1Tile: {fileID: 11400000, guid: a1a8c670da5bfcf498013091cdb6511d, type: 2}
+  ship2StartTile: {fileID: 11400000, guid: ea108981284d4a74b8bffa788171e5e4, type: 2}
+  ship2EndTile: {fileID: 11400000, guid: 81b136e237ae69a4db942397413d04c2, type: 2}
+  ship3StartTile: {fileID: 11400000, guid: 8cb1d6727b8b84547842c0d9dfa55b6b, type: 2}
+  ship3MiddleTile: {fileID: 11400000, guid: 695733dcff4756a409db7ccd41eab9a8, type: 2}
+  ship3EndTile: {fileID: 11400000, guid: b4ffeb49b7d5bce4f81e8f7c3bbf1707, type: 2}
+  ship4StartTile: {fileID: 11400000, guid: 43736e9b0e998484fb46d0e7e0881ea8, type: 2}
+  ship4Middle1Tile: {fileID: 11400000, guid: 10c8f78a553b3584bac01f738dcb39b6, type: 2}
+  ship4Middle2Tile: {fileID: 11400000, guid: e92633882b6653a4583051e2410ac3a2, type: 2}
+  ship4EndTile: {fileID: 11400000, guid: e3fad7e9e7c04a04aa9f62396adaf18b, type: 2}
+  ship5StartTile: {fileID: 11400000, guid: bba2638c45ca83842b856371659ba84a, type: 2}
+  ship5Middle1Tile: {fileID: 11400000, guid: f984ae40136a0a449b3e482c4b2d2b9d, type: 2}
+  ship5Middle2Tile: {fileID: 11400000, guid: 49e82dbb95e83cf4dbd3b1f487bdc077, type: 2}
+  ship5Middle3Tile: {fileID: 11400000, guid: 49e82dbb95e83cf4dbd3b1f487bdc077, type: 2}
+  ship5EndTile: {fileID: 11400000, guid: b26c01d7167dd4c49b820ffed6540563, type: 2}
   shipButtons:
   - {fileID: 98466613}
   - {fileID: 1768885837}
@@ -479,7 +493,7 @@ Transform:
   m_GameObject: {fileID: 95572842}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.82, y: -0.64492, z: 0}
+  m_LocalPosition: {x: -11, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -531,9 +545,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caa9d5e8df467c649955bb04022625ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoardController
-  tilemap: {fileID: 1442463486}
-  emptyTile: {fileID: 11400000, guid: 289d32a2cefd6244b8d4df3266183d00, type: 2}
-  shipTile: {fileID: 11400000, guid: 49380e9f8cd39104c95bce2de310f282, type: 2}
+  tilemap: {fileID: 425318833}
+  emptyTile: {fileID: 11400000, guid: dfcacade9944b724487e4dfb1d5f08f5, type: 2}
+  ship1Tile: {fileID: 11400000, guid: a1a8c670da5bfcf498013091cdb6511d, type: 2}
+  ship2StartTile: {fileID: 11400000, guid: ea108981284d4a74b8bffa788171e5e4, type: 2}
+  ship2EndTile: {fileID: 11400000, guid: 81b136e237ae69a4db942397413d04c2, type: 2}
+  ship3StartTile: {fileID: 11400000, guid: 8cb1d6727b8b84547842c0d9dfa55b6b, type: 2}
+  ship3MiddleTile: {fileID: 11400000, guid: 695733dcff4756a409db7ccd41eab9a8, type: 2}
+  ship3EndTile: {fileID: 11400000, guid: b4ffeb49b7d5bce4f81e8f7c3bbf1707, type: 2}
+  ship4StartTile: {fileID: 11400000, guid: 43736e9b0e998484fb46d0e7e0881ea8, type: 2}
+  ship4Middle1Tile: {fileID: 11400000, guid: 10c8f78a553b3584bac01f738dcb39b6, type: 2}
+  ship4Middle2Tile: {fileID: 11400000, guid: e92633882b6653a4583051e2410ac3a2, type: 2}
+  ship4EndTile: {fileID: 11400000, guid: e3fad7e9e7c04a04aa9f62396adaf18b, type: 2}
+  ship5StartTile: {fileID: 11400000, guid: bba2638c45ca83842b856371659ba84a, type: 2}
+  ship5Middle1Tile: {fileID: 11400000, guid: f984ae40136a0a449b3e482c4b2d2b9d, type: 2}
+  ship5Middle2Tile: {fileID: 11400000, guid: 49e82dbb95e83cf4dbd3b1f487bdc077, type: 2}
+  ship5Middle3Tile: {fileID: 11400000, guid: 49e82dbb95e83cf4dbd3b1f487bdc077, type: 2}
+  ship5EndTile: {fileID: 11400000, guid: b26c01d7167dd4c49b820ffed6540563, type: 2}
   shipButtons:
   - {fileID: 98466613}
   - {fileID: 1768885837}
@@ -549,7 +577,7 @@ Transform:
   m_GameObject: {fileID: 313357579}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 0.34, z: 0}
+  m_LocalPosition: {x: 1, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -592,7 +620,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 518, y: 280}
+  m_AnchoredPosition: {x: 159, y: 495}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &376373183
@@ -833,7 +861,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 518, y: 333}
+  m_AnchoredPosition: {x: -132, y: 495}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &416739208
@@ -1212,7 +1240,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 5, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1301,7 +1329,7 @@ Transform:
   m_GameObject: {fileID: 619394800}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 120, y: 96, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1535,7 +1563,7 @@ Transform:
   m_GameObject: {fileID: 1043658842}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 120, y: 96, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1647,11 +1675,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5197337401418024204, guid: 49b049e92bde3ad4098267edd0eff425, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 619
+      value: 169
       objectReference: {fileID: 0}
     - target: {fileID: 5197337401418024204, guid: 49b049e92bde3ad4098267edd0eff425, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -191
+      value: -481
       objectReference: {fileID: 0}
     - target: {fileID: 5197337401418024204, guid: 49b049e92bde3ad4098267edd0eff425, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2081,11 +2109,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5197337401418024204, guid: 49b049e92bde3ad4098267edd0eff425, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 506.5
+      value: -722
       objectReference: {fileID: 0}
     - target: {fileID: 5197337401418024204, guid: 49b049e92bde3ad4098267edd0eff425, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 99
+      value: -481
       objectReference: {fileID: 0}
     - target: {fileID: 5197337401418024204, guid: 49b049e92bde3ad4098267edd0eff425, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2277,11 +2305,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5197337401418024204, guid: 49b049e92bde3ad4098267edd0eff425, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 544
+      value: -499.5
       objectReference: {fileID: 0}
     - target: {fileID: 5197337401418024204, guid: 49b049e92bde3ad4098267edd0eff425, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -3
+      value: -492
       objectReference: {fileID: 0}
     - target: {fileID: 5197337401418024204, guid: 49b049e92bde3ad4098267edd0eff425, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2422,11 +2450,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5197337401418024204, guid: 49b049e92bde3ad4098267edd0eff425, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 469
+      value: -879.5
       objectReference: {fileID: 0}
     - target: {fileID: 5197337401418024204, guid: 49b049e92bde3ad4098267edd0eff425, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 198
+      value: -478
       objectReference: {fileID: 0}
     - target: {fileID: 5197337401418024204, guid: 49b049e92bde3ad4098267edd0eff425, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
