@@ -125,7 +125,7 @@ TextureImporter:
       name: all_cats_1
       rect:
         serializedVersion: 2
-        x: 128
+        x: 512
         y: 512
         width: 128
         height: 128
@@ -147,8 +147,8 @@ TextureImporter:
       name: all_cats_2
       rect:
         serializedVersion: 2
-        x: 256
-        y: 512
+        x: 0
+        y: 384
         width: 128
         height: 128
       alignment: 0
@@ -169,8 +169,8 @@ TextureImporter:
       name: all_cats_3
       rect:
         serializedVersion: 2
-        x: 384
-        y: 512
+        x: 128
+        y: 384
         width: 128
         height: 128
       alignment: 0
@@ -191,8 +191,8 @@ TextureImporter:
       name: all_cats_4
       rect:
         serializedVersion: 2
-        x: 512
-        y: 512
+        x: 384
+        y: 384
         width: 128
         height: 128
       alignment: 0
@@ -213,7 +213,7 @@ TextureImporter:
       name: all_cats_5
       rect:
         serializedVersion: 2
-        x: 0
+        x: 512
         y: 384
         width: 128
         height: 128
@@ -235,7 +235,7 @@ TextureImporter:
       name: all_cats_6
       rect:
         serializedVersion: 2
-        x: 128
+        x: 640
         y: 384
         width: 128
         height: 128
@@ -257,8 +257,8 @@ TextureImporter:
       name: all_cats_7
       rect:
         serializedVersion: 2
-        x: 256
-        y: 384
+        x: 0
+        y: 256
         width: 128
         height: 128
       alignment: 0
@@ -279,8 +279,8 @@ TextureImporter:
       name: all_cats_8
       rect:
         serializedVersion: 2
-        x: 384
-        y: 384
+        x: 128
+        y: 256
         width: 128
         height: 128
       alignment: 0
@@ -301,8 +301,8 @@ TextureImporter:
       name: all_cats_9
       rect:
         serializedVersion: 2
-        x: 512
-        y: 384
+        x: 256
+        y: 256
         width: 128
         height: 128
       alignment: 0
@@ -323,7 +323,7 @@ TextureImporter:
       name: all_cats_10
       rect:
         serializedVersion: 2
-        x: 0
+        x: 384
         y: 256
         width: 128
         height: 128
@@ -345,7 +345,7 @@ TextureImporter:
       name: all_cats_11
       rect:
         serializedVersion: 2
-        x: 128
+        x: 512
         y: 256
         width: 128
         height: 128
@@ -367,8 +367,8 @@ TextureImporter:
       name: all_cats_12
       rect:
         serializedVersion: 2
-        x: 256
-        y: 256
+        x: 0
+        y: 128
         width: 128
         height: 128
       alignment: 0
@@ -389,8 +389,8 @@ TextureImporter:
       name: all_cats_13
       rect:
         serializedVersion: 2
-        x: 384
-        y: 256
+        x: 128
+        y: 128
         width: 128
         height: 128
       alignment: 0
@@ -411,8 +411,8 @@ TextureImporter:
       name: all_cats_14
       rect:
         serializedVersion: 2
-        x: 512
-        y: 256
+        x: 256
+        y: 128
         width: 128
         height: 128
       alignment: 0
@@ -433,7 +433,7 @@ TextureImporter:
       name: all_cats_15
       rect:
         serializedVersion: 2
-        x: 0
+        x: 384
         y: 128
         width: 128
         height: 128
@@ -455,8 +455,8 @@ TextureImporter:
       name: all_cats_16
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
+        x: 0
+        y: 0
         width: 128
         height: 128
       alignment: 0
@@ -477,8 +477,8 @@ TextureImporter:
       name: all_cats_17
       rect:
         serializedVersion: 2
-        x: 256
-        y: 128
+        x: 128
+        y: 0
         width: 128
         height: 128
       alignment: 0
@@ -499,8 +499,8 @@ TextureImporter:
       name: all_cats_18
       rect:
         serializedVersion: 2
-        x: 384
-        y: 128
+        x: 256
+        y: 0
         width: 128
         height: 128
       alignment: 0
@@ -521,8 +521,8 @@ TextureImporter:
       name: all_cats_19
       rect:
         serializedVersion: 2
-        x: 512
-        y: 128
+        x: 384
+        y: 0
         width: 128
         height: 128
       alignment: 0
@@ -543,7 +543,7 @@ TextureImporter:
       name: all_cats_20
       rect:
         serializedVersion: 2
-        x: 0
+        x: 512
         y: 0
         width: 128
         height: 128
@@ -557,94 +557,6 @@ TextureImporter:
       bones: []
       spriteID: c780538284fdd0e4693642ecc799be26
       internalID: -2075108282
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: all_cats_21
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e6fb1a25f6dd71f46b54407a4be245fd
-      internalID: 945573955
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: all_cats_22
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8167547e576b1164b8be8be8c690972d
-      internalID: -529011690
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: all_cats_23
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7426797e2afd1dc48bef690972bb1dc0
-      internalID: -710574050
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: all_cats_24
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7c00982f5f206724e84d445065fa3371
-      internalID: 968892014
       vertices: []
       indices: 
       edges: []
@@ -663,7 +575,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":5.0,"y":5.0},"gridSpriteSize":{"x":128.0,"y":128.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":6.0,"y":5.0},"gridSpriteSize":{"x":128.0,"y":128.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       all_cats_0: 1248711487197757348
       all_cats_1: 1383891844
@@ -679,10 +591,6 @@ TextureImporter:
       all_cats_19: -10095440
       all_cats_2: 881665670
       all_cats_20: -2075108282
-      all_cats_21: 945573955
-      all_cats_22: -529011690
-      all_cats_23: -710574050
-      all_cats_24: 968892014
       all_cats_3: 457625531
       all_cats_4: -2137375228
       all_cats_5: 1294158430
