@@ -335,30 +335,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BoardController
   backgroundTilemap: {fileID: 425318833}
   shipsTilemap: {fileID: 952046457}
-  emptyTile: {fileID: 11400000, guid: e4b7dd913a499f445a27ca27b1f7da8d, type: 2}
+  emptyTile: {fileID: 11400000, guid: 2d6d46b966787824daed390447b397f3, type: 2}
   ship1Tile: {fileID: 11400000, guid: ed03658b5c298464fbd6a69e665803a6, type: 2}
-  ship2StartTile: {fileID: 11400000, guid: 2d6d46b966787824daed390447b397f3, type: 2}
-  ship2EndTile: {fileID: 11400000, guid: b1c565012f179c94d8a8e258bf71d625, type: 2}
-  ship3StartTile: {fileID: 11400000, guid: 34554189ddc76a846bf876def7b03daa, type: 2}
-  ship3MiddleTile: {fileID: 11400000, guid: 4e0ca766bb65e6b45a15c124e1237668, type: 2}
-  ship3EndTile: {fileID: 11400000, guid: faad4a4936bd239458905e1e6d7e2c00, type: 2}
-  ship4StartTile: {fileID: 11400000, guid: f97f21845a664814e97e0a0a98bdb42e, type: 2}
-  ship4Middle1Tile: {fileID: 11400000, guid: 95d6688458c3b154c8a0eee05216bf38, type: 2}
-  ship4Middle2Tile: {fileID: 11400000, guid: 77c0088d145b24d4abbf5b68f0591623, type: 2}
-  ship4EndTile: {fileID: 11400000, guid: 09d9f54f77556a24f9352f500ddacbe5, type: 2}
-  ship5StartTile: {fileID: 11400000, guid: 889cae946c83ea646908a9eb0be7ddfc, type: 2}
-  ship5Middle1Tile: {fileID: 11400000, guid: 0bc7cee68b1d4654da26abb8f97e829d, type: 2}
-  ship5Middle2Tile: {fileID: 11400000, guid: ba078f17f7c56654b8a3ed7f42d2a31b, type: 2}
-  ship5Middle3Tile: {fileID: 11400000, guid: eb655265e4578b042b6bf6ce0f7ae4fe, type: 2}
-  ship5EndTile: {fileID: 11400000, guid: c4ea702ac6ff9be4a80100a627fb984b, type: 2}
+  ship2StartTile: {fileID: 11400000, guid: f481a0c847abc074b9cb1433807bda1f, type: 2}
+  ship2EndTile: {fileID: 11400000, guid: 995989954ce0e7744b22c579bc0b8c70, type: 2}
+  ship3StartTile: {fileID: 11400000, guid: ca1f384ef90b77f4cbafe79ef404394f, type: 2}
+  ship3MiddleTile: {fileID: 11400000, guid: 7220021f7b0152944997a1a9a6c1d94d, type: 2}
+  ship3EndTile: {fileID: 11400000, guid: 4c9229f25efb02f48ae51b03694445bf, type: 2}
+  ship4StartTile: {fileID: 11400000, guid: faad4a4936bd239458905e1e6d7e2c00, type: 2}
+  ship4Middle1Tile: {fileID: 11400000, guid: 555558a0530e1014587a75de14c16226, type: 2}
+  ship4Middle2Tile: {fileID: 11400000, guid: 902e8ddef5f28d741adfeeff353c394e, type: 2}
+  ship4EndTile: {fileID: 11400000, guid: f97f21845a664814e97e0a0a98bdb42e, type: 2}
+  ship5StartTile: {fileID: 11400000, guid: 95d6688458c3b154c8a0eee05216bf38, type: 2}
+  ship5Middle1Tile: {fileID: 11400000, guid: 77c0088d145b24d4abbf5b68f0591623, type: 2}
+  ship5Middle2Tile: {fileID: 11400000, guid: 09d9f54f77556a24f9352f500ddacbe5, type: 2}
+  ship5Middle3Tile: {fileID: 11400000, guid: f5044710d4bc1fc4db85010b48deb87b, type: 2}
+  ship5EndTile: {fileID: 11400000, guid: 889cae946c83ea646908a9eb0be7ddfc, type: 2}
   shipButtons:
   - {fileID: 516232293}
   - {fileID: 538663169}
   - {fileID: 272764798}
   - {fileID: 1054395818}
   - {fileID: 912330809}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!4 &95572844
 Transform:
   m_ObjectHideFlags: 0
@@ -538,18 +536,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BoardController
   backgroundTilemap: {fileID: 1442463486}
   shipsTilemap: {fileID: 1813758525}
-  emptyTile: {fileID: 11400000, guid: e4b7dd913a499f445a27ca27b1f7da8d, type: 2}
-  ship1Tile: {fileID: 11400000, guid: ed03658b5c298464fbd6a69e665803a6, type: 2}
-  ship2StartTile: {fileID: 11400000, guid: 2d6d46b966787824daed390447b397f3, type: 2}
-  ship2EndTile: {fileID: 11400000, guid: b1c565012f179c94d8a8e258bf71d625, type: 2}
-  ship3StartTile: {fileID: 11400000, guid: 34554189ddc76a846bf876def7b03daa, type: 2}
-  ship3MiddleTile: {fileID: 11400000, guid: 4e0ca766bb65e6b45a15c124e1237668, type: 2}
-  ship3EndTile: {fileID: 11400000, guid: faad4a4936bd239458905e1e6d7e2c00, type: 2}
-  ship4StartTile: {fileID: 11400000, guid: f97f21845a664814e97e0a0a98bdb42e, type: 2}
-  ship4Middle1Tile: {fileID: 11400000, guid: 95d6688458c3b154c8a0eee05216bf38, type: 2}
-  ship4Middle2Tile: {fileID: 11400000, guid: 77c0088d145b24d4abbf5b68f0591623, type: 2}
-  ship4EndTile: {fileID: 11400000, guid: 09d9f54f77556a24f9352f500ddacbe5, type: 2}
-  ship5StartTile: {fileID: 11400000, guid: 889cae946c83ea646908a9eb0be7ddfc, type: 2}
+  emptyTile: {fileID: 0}
+  ship1Tile: {fileID: 0}
+  ship2StartTile: {fileID: 0}
+  ship2EndTile: {fileID: 0}
+  ship3StartTile: {fileID: 0}
+  ship3MiddleTile: {fileID: 0}
+  ship3EndTile: {fileID: 0}
+  ship4StartTile: {fileID: 0}
+  ship4Middle1Tile: {fileID: 0}
+  ship4Middle2Tile: {fileID: 0}
+  ship4EndTile: {fileID: 0}
+  ship5StartTile: {fileID: 0}
   ship5Middle1Tile: {fileID: 11400000, guid: 0bc7cee68b1d4654da26abb8f97e829d, type: 2}
   ship5Middle2Tile: {fileID: 11400000, guid: ba078f17f7c56654b8a3ed7f42d2a31b, type: 2}
   ship5Middle3Tile: {fileID: 11400000, guid: eb655265e4578b042b6bf6ce0f7ae4fe, type: 2}
@@ -2704,8 +2702,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkBoardView
   enemyTilemap: {fileID: 1442463486}
-  emptyTile: {fileID: 11400000, guid: e4b7dd913a499f445a27ca27b1f7da8d, type: 2}
-  shipTile: {fileID: 11400000, guid: ed03658b5c298464fbd6a69e665803a6, type: 2}
+  emptyTile: {fileID: 0}
+  shipTile: {fileID: 0}
   showEnemyShips: 1
 --- !u!1 &2124106000
 GameObject:
