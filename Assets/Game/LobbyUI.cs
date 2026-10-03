@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class LobbyUI : MonoBehaviour
 {
-    [Header("PANELE")]
+    /*[Header("PANELE")]
     [SerializeField] private GameObject browserPanel;
     [SerializeField] private GameObject createPanel;
-    [SerializeField] private GameObject passwordPanel;
+    [SerializeField] private GameObject passwordPanel;*/
 
     [Header("TWORZENIE GRY")]
     [SerializeField] private TMP_InputField gameNameInput;
@@ -22,8 +22,8 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private Transform lobbyListParent;
     [SerializeField] private LobbyItem lobbyItemPrefab;
 
-    [Header("STATUS")]
-    [SerializeField] private TMP_Text statusText;
+    /*[Header("STATUS")]
+    [SerializeField] private TMP_Text statusText;*/
 
     private string selectedSessionId;
 
@@ -44,7 +44,7 @@ public class LobbyUI : MonoBehaviour
         MultiplayerManager.Instance
             .StatusChanged += OnStatusChanged;
 
-        ShowBrowser();
+        //ShowBrowser();
 
         Refresh();
     }
@@ -107,19 +107,19 @@ public class LobbyUI : MonoBehaviour
     // CREATE
     // =========================================================
 
-    public void ShowCreate()
+    /*public void ShowCreate()
     {
         browserPanel.SetActive(false);
         passwordPanel.SetActive(false);
         createPanel.SetActive(true);
-    }
+    }*/
 
-    public void ShowBrowser()
+    /*public void ShowBrowser()
     {
         browserPanel.SetActive(true);
         createPanel.SetActive(false);
         passwordPanel.SetActive(false);
-    }
+    }*/
 
     public async void CreateGame()
     {
@@ -153,9 +153,9 @@ public class LobbyUI : MonoBehaviour
     {
         selectedSessionId = sessionId;
 
-        browserPanel.SetActive(false);
+        /*browserPanel.SetActive(false);
         createPanel.SetActive(false);
-        passwordPanel.SetActive(true);
+        passwordPanel.SetActive(true);*/
 
         joinPasswordInput.text = "";
         joinPasswordInput.Select();
@@ -194,7 +194,7 @@ public class LobbyUI : MonoBehaviour
     {
         selectedSessionId = null;
 
-        ShowBrowser();
+        //ShowBrowser();
     }
 
     // =========================================================
@@ -209,9 +209,9 @@ public class LobbyUI : MonoBehaviour
             message
         );
 
-        if (statusText != null)
+        /*if (statusText != null)
         {
             statusText.text = message;
-        }
+        }*/
     }
 }
