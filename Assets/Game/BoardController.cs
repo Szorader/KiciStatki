@@ -26,7 +26,8 @@ public enum ShipPart
 public class BoardController : MonoBehaviour
 {
     [Header("Board")]
-    [SerializeField] private Tilemap tilemap;
+    [SerializeField] private Tilemap backgroundTilemap;
+    [SerializeField] private Tilemap shipsTilemap;
     [SerializeField] private TileBase emptyTile;
 
     [Header("Ship 1")]
@@ -163,7 +164,27 @@ public class BoardController : MonoBehaviour
 
     private void GenerateBoard()
     {
-        tilemap.ClearAllTiles();
+        if (backgroundTilemap == null)
+        {
+            Debug.LogError(
+                "BoardController: Background Tilemap nie jest przypisany!"
+            );
+
+            return;
+        }
+
+        if (shipsTilemap == null)
+        {
+            Debug.LogError(
+                "BoardController: Ships Tilemap nie jest przypisany!"
+            );
+
+            return;
+        }
+
+        // Czyścimy obie Tilemapy
+        backgroundTilemap.ClearAllTiles();
+        shipsTilemap.ClearAllTiles();
 
         for (int x = 0; x < BoardSize; x++)
         {
@@ -177,12 +198,31 @@ public class BoardController : MonoBehaviour
                 Vector3Int tilePosition =
                     new Vector3Int(x, y, 0);
 
-                tilemap.SetTile(
+                // =================================================
+                // TŁO
+                // =================================================
+
+                backgroundTilemap.SetTile(
                     tilePosition,
                     emptyTile
                 );
 
-                tilemap.SetTransformMatrix(
+                backgroundTilemap.SetTransformMatrix(
+                    tilePosition,
+                    Matrix4x4.identity
+                );
+
+                // =================================================
+                // STATEK
+                // =================================================
+
+                // Na początku pole statku jest puste.
+                shipsTilemap.SetTile(
+                    tilePosition,
+                    null
+                );
+
+                shipsTilemap.SetTransformMatrix(
                     tilePosition,
                     Matrix4x4.identity
                 );
@@ -259,8 +299,10 @@ public class BoardController : MonoBehaviour
                 Input.mousePosition
             );
 
+        // Pozycję komórki pobieramy z Tilemapy tła.
+        // Obie Tilemapy muszą mieć ten sam Grid / pozycję.
         Vector3Int cellPosition =
-            tilemap.WorldToCell(
+            backgroundTilemap.WorldToCell(
                 mouseWorldPosition
             );
 
@@ -309,7 +351,8 @@ public class BoardController : MonoBehaviour
             TileBase tile =
                 GetCurrentShipTile(i);
 
-            tilemap.SetTile(
+            // STATEK TRAFIA TYLKO NA SHIPS TILEMAP
+            shipsTilemap.SetTile(
                 tilePosition,
                 tile
             );
@@ -692,7 +735,7 @@ public class BoardController : MonoBehaviour
                 return ship5EndTile;
 
             default:
-                return emptyTile;
+                return null;
         }
     }
 
@@ -709,8 +752,7 @@ public class BoardController : MonoBehaviour
                 Vector3Int tilePosition =
                     new Vector3Int(x, y, 0);
 
-                if (grid[x, y] ==
-                    CellState.Ship)
+                if (grid[x, y] == CellState.Ship)
                 {
                     TileBase tile =
                         GetStoredShipTile(
@@ -718,7 +760,8 @@ public class BoardController : MonoBehaviour
                             y
                         );
 
-                    tilemap.SetTile(
+                    // STATEKI TYLKO NA SHIPS TILEMAP
+                    shipsTilemap.SetTile(
                         tilePosition,
                         tile
                     );
@@ -730,12 +773,14 @@ public class BoardController : MonoBehaviour
                 }
                 else
                 {
-                    tilemap.SetTile(
+                    // Usuwamy tylko statek.
+                    // Tło na BackgroundTilemap zostaje.
+                    shipsTilemap.SetTile(
                         tilePosition,
-                        emptyTile
+                        null
                     );
 
-                    tilemap.SetTransformMatrix(
+                    shipsTilemap.SetTransformMatrix(
                         tilePosition,
                         Matrix4x4.identity
                     );
@@ -761,7 +806,7 @@ public class BoardController : MonoBehaviour
                 angle
             );
 
-        tilemap.SetTransformMatrix(
+        shipsTilemap.SetTransformMatrix(
             position,
             Matrix4x4.TRS(
                 Vector3.zero,
