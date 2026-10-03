@@ -60,7 +60,7 @@ public class BoardController : MonoBehaviour
     private const int BoardSize = 10;
     private const int MaxShipSize = 5;
 
-    private readonly CellState[,] grid =
+    public readonly CellState[,] grid =
         new CellState[BoardSize, BoardSize];
 
     private readonly ShipPart[,] shipParts =

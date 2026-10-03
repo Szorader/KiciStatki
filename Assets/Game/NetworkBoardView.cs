@@ -4,15 +4,16 @@ using UnityEngine.Tilemaps;
 
 public class NetworkBoardView : MonoBehaviour
 {
-    [Header("Plansze")]
-    [SerializeField] private Tilemap myTilemap;
+    [Header("Plansza przeciwnika")]
     [SerializeField] private Tilemap enemyTilemap;
 
     [Header("Kafelki")]
     [SerializeField] private TileBase emptyTile;
     [SerializeField] private TileBase shipTile;
 
-    private NetworkPlayerBoard myBoard;
+    [Header("Ustawienia")]
+    [SerializeField] private bool showEnemyShips = true;
+
     private NetworkPlayerBoard enemyBoard;
 
     private const int BoardSize = 10;
@@ -25,16 +26,15 @@ public class NetworkBoardView : MonoBehaviour
         if (!NetworkManager.Singleton.IsClient)
             return;
 
-        FindBoards();
+        FindEnemyBoard();
 
-        if (myBoard == null || enemyBoard == null)
+        if (enemyBoard == null)
             return;
 
-        DrawMyBoard();
         DrawEnemyBoard();
     }
 
-    private void FindBoards()
+    private void FindEnemyBoard()
     {
         NetworkPlayerBoard[] boards =
             FindObjectsByType<NetworkPlayerBoard>(
@@ -47,39 +47,15 @@ public class NetworkBoardView : MonoBehaviour
             if (!board.IsSpawned)
                 continue;
 
-            if (board.IsOwner)
-            {
-                myBoard = board;
-            }
-            else
+            // Szukamy planszy, która NIE należy do nas
+            if (!board.IsOwner)
             {
                 enemyBoard = board;
+                return;
             }
         }
-    }
 
-    private void DrawMyBoard()
-    {
-        if (myTilemap == null)
-            return;
-
-        for (int x = 0; x < BoardSize; x++)
-        {
-            for (int y = 0; y < BoardSize; y++)
-            {
-                TileBase tile = emptyTile;
-
-                if (myBoard.HasShip(x, y))
-                {
-                    tile = shipTile;
-                }
-
-                myTilemap.SetTile(
-                    new Vector3Int(x, y, 0),
-                    tile
-                );
-            }
-        }
+        enemyBoard = null;
     }
 
     private void DrawEnemyBoard()
@@ -91,15 +67,19 @@ public class NetworkBoardView : MonoBehaviour
         {
             for (int y = 0; y < BoardSize; y++)
             {
+                Vector3Int position =
+                    new Vector3Int(x, y, 0);
+
                 TileBase tile = emptyTile;
 
-                if (enemyBoard.HasShip(x, y))
+                if (showEnemyShips &&
+                    enemyBoard.HasShip(x, y))
                 {
                     tile = shipTile;
                 }
 
                 enemyTilemap.SetTile(
-                    new Vector3Int(x, y, 0),
+                    position,
                     tile
                 );
             }
