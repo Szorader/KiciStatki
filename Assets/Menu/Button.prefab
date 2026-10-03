@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5197337401418024204}
   - component: {fileID: 2826098087483265049}
   - component: {fileID: 2101021636399662767}
+  - component: {fileID: 8939962010383057945}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -69,7 +70,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -106,6 +107,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &8939962010383057945
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345316968926480301}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 68cf7da505915ac4bb9adfd29d4d38cd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &358666441239000193
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,7 +141,7 @@ GameObject:
   - component: {fileID: 502542079744756857}
   - component: {fileID: 7127484596790671875}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: "w\u0105s"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -330,7 +353,7 @@ GameObject:
   - component: {fileID: 732963034081355194}
   - component: {fileID: 1506821847348390223}
   m_Layer: 5
-  m_Name: Image (3)
+  m_Name: cialko
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -405,7 +428,7 @@ GameObject:
   - component: {fileID: 6600834959455994389}
   - component: {fileID: 5849978357706227141}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: uszy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -480,7 +503,7 @@ GameObject:
   - component: {fileID: 4031377551561087357}
   - component: {fileID: 8814971919921862062}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ogon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
