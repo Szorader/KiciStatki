@@ -1,25 +1,16 @@
 fileFormatVersion: 2
-guid: 164c9cd2848912442ab9a529c18d437d
+guid: eff15f9eaf7afaa4986687b2a3c4014c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7775147770192671128
-    second: Group 29_0
+      213: -1934304315715342256
+    second: Whiskers_0
   - first:
-      213: 7108321848833093959
-    second: Group 29_1
+      213: -1480594888018373515
+    second: Whiskers_1
   - first:
-      213: -9136557097390222172
-    second: Group 29_2
-  - first:
-      213: -8844508973884643066
-    second: Group 29_3
-  - first:
-      213: 6345924081297468545
-    second: Group 29_4
-  - first:
-      213: -8949915989954985420
-    second: Group 29_5
+      213: 569778566734639992
+    second: Whiskers_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -115,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Group 29_0
+      name: Whiskers_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 107
-        width: 202
-        height: 57
+        x: 5
+        y: 89
+        width: 201
+        height: 67
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,42 +121,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8913186d3bfd6eb60800000000000000
-      internalID: 7775147770192671128
+      spriteID: 05038462978f725e0800000000000000
+      internalID: -1934304315715342256
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Group 29_1
-      rect:
-        serializedVersion: 2
-        x: 1040
-        y: 112
-        width: 203
-        height: 57
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 74138dc5f05d5a260800000000000000
-      internalID: 7108321848833093959
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Group 29_2
+      name: Whiskers_1
       rect:
         serializedVersion: 2
         x: 0
-        y: 76
+        y: 69
         width: 206
-        height: 12
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,42 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4a45bfb3abd643180800000000000000
-      internalID: -9136557097390222172
+      spriteID: 574d76b3bced37be0800000000000000
+      internalID: -1480594888018373515
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Group 29_3
+      name: Whiskers_2
       rect:
         serializedVersion: 2
-        x: 1043
-        y: 81
-        width: 207
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 609e9dec2fdf14580800000000000000
-      internalID: -8844508973884643066
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Group 29_4
-      rect:
-        serializedVersion: 2
-        x: 8
+        x: 5
         y: 0
-        width: 203
-        height: 57
+        width: 201
+        height: 67
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,30 +165,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 18c255d6450411850800000000000000
-      internalID: 6345924081297468545
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Group 29_5
-      rect:
-        serializedVersion: 2
-        x: 1039
-        y: 5
-        width: 202
-        height: 57
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 432052963d28bc380800000000000000
-      internalID: -8949915989954985420
+      spriteID: 87379de669248e700800000000000000
+      internalID: 569778566734639992
       vertices: []
       indices: 
       edges: []
@@ -260,12 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Group 29_0: 7775147770192671128
-      Group 29_1: 7108321848833093959
-      Group 29_2: -9136557097390222172
-      Group 29_3: -8844508973884643066
-      Group 29_4: 6345924081297468545
-      Group 29_5: -8949915989954985420
+      Whiskers_0: -1934304315715342256
+      Whiskers_1: -1480594888018373515
+      Whiskers_2: 569778566734639992
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
