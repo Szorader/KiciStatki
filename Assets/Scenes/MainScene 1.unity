@@ -145,7 +145,7 @@ Transform:
   m_GameObject: {fileID: 7286502}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.69955, y: 0.64492, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -302,7 +302,7 @@ Transform:
   m_GameObject: {fileID: 95572842}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11, y: -5, z: 0}
+  m_LocalPosition: {x: -20, y: 31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1222,7 +1222,7 @@ RectTransform:
   m_Father: {fileID: 1191231854}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.386, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -19.3114, y: -0}
   m_SizeDelta: {x: 48.6227, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4583,7 +4583,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0.000030517578}
-  m_SizeDelta: {x: 850, y: 20}
+  m_SizeDelta: {x: 850, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1450278268
 MonoBehaviour:
@@ -5806,7 +5806,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -10
+  m_SortingOrder: -30
   m_MaskInteraction: 0
   m_Sprite: {fileID: -6695950386315148514, guid: 3ba7608360edfa644961a9476532118f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6043,8 +6043,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 354755191}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
-  m_AnchorMin: {x: 0.386, y: 0}
-  m_AnchorMax: {x: 0.386, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 26.051, y: -0.6}
   m_SizeDelta: {x: 50, y: 33.3019}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6708,7 +6708,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2014428497
 Transform:
   m_ObjectHideFlags: 0
@@ -6746,7 +6746,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2028002720
 Transform:
   m_ObjectHideFlags: 0
@@ -6931,7 +6931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf989267055f133429c9c1202028aaa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyUI
-  gameNameInput: {fileID: 0}
+  gameNameInput: {fileID: 680448526}
   lobbyListParent: {fileID: 1450278267}
   lobbyItemPrefab: {fileID: -8052761468884628405, guid: 6e2fa0c9dfa1ff546a2ddab4a66004f0, type: 3}
   canvasOFF: {fileID: 2082021639}
@@ -6952,6 +6952,7 @@ MonoBehaviour:
   - {fileID: 1554452454}
   - {fileID: 230882902}
   - {fileID: 2014428496}
+  lobbyUI: {fileID: 2082021640}
 --- !u!114 &2082021642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7226,8 +7227,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkBoardView
   enemyTilemap: {fileID: 1442463486}
-  emptyTile: {fileID: 0}
-  shipTile: {fileID: 0}
+  emptyTile: {fileID: 11400000, guid: 34554189ddc76a846bf876def7b03daa, type: 2}
+  shipTile: {fileID: 11400000, guid: ed03658b5c298464fbd6a69e665803a6, type: 2}
   showEnemyShips: 1
 --- !u!1 &2139717546
 GameObject:
