@@ -449,7 +449,7 @@ public class MultiplayerManager : MonoBehaviour
     // CREATE GAME
     // =========================================================
 
-    public async Task<bool> CreateGame(string gameName)
+    /*public async Task<bool> CreateGame(string gameName)
     {
         if (!IsInitialized)
         {
@@ -529,7 +529,72 @@ public class MultiplayerManager : MonoBehaviour
 
             return false;
         }
+    }*/
+    
+    public async Task<bool> CreateGame(string gameName, string password)
+    {
+        if (!IsInitialized)
+            await InitializeServices();
+
+        if (!IsInitialized)
+            return false;
+
+        
+        if (string.IsNullOrWhiteSpace(gameName))
+        {
+            StatusChanged?.Invoke("Podaj nazwę pokoju.");
+            return false;
+        }
+
+        password = password?.Trim();
+
+        if (string.IsNullOrEmpty(password) ||
+            password.Length < 8 ||
+            password.Length > 64)
+        {
+            StatusChanged?.Invoke(
+                "Hasło musi mieć od 8 do 64 znaków."
+            );
+            return false;
+        }
+
+        try
+        {
+            StatusChanged?.Invoke("Tworzenie pokoju...");
+
+            SessionOptions options = new SessionOptions
+            {
+                Name = gameName,
+                MaxPlayers = 2,
+                IsPrivate = false,
+                Password = password
+            }.WithRelayNetwork();
+
+            CurrentSession =
+                await MultiplayerService.Instance
+                    .CreateSessionAsync(options);
+
+            Debug.Log("Utworzono pokój: " + CurrentSession.Name);
+            Debug.Log("Session ID: " + CurrentSession.Id);
+
+            StatusChanged?.Invoke(
+                "Pokój utworzony. Czekam na gracza..."
+            );
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Błąd tworzenia pokoju:\n" + e);
+
+            StatusChanged?.Invoke(
+                "Nie udało się utworzyć pokoju."
+            );
+
+            return false;
+        }
     }
+
 
     // =========================================================
     // SEARCH
@@ -697,7 +762,7 @@ public class MultiplayerManager : MonoBehaviour
         }
     }
 */
-    public async Task<bool> JoinGame(string sessionId)
+    /*public async Task<bool> JoinGame(string sessionId)
 {
     if (!IsInitialized)
     {
@@ -827,7 +892,75 @@ public class MultiplayerManager : MonoBehaviour
 
         return false;
     }
-}
+}*/
+    
+    public async Task<bool> JoinGame(
+        string sessionId,
+        string password)
+    {
+        if (!IsInitialized)
+            await InitializeServices();
+
+        if (!IsInitialized)
+            return false;
+
+        if (string.IsNullOrEmpty(sessionId))
+        {
+            Debug.LogError("Session ID jest pusty.");
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(password))
+        {
+            StatusChanged?.Invoke("Wpisz hasło do pokoju.");
+            return false;
+        }
+
+        try
+        {
+            StatusChanged?.Invoke("Dołączanie do pokoju...");
+
+            CurrentSession =
+                await MultiplayerService.Instance.JoinSessionByIdAsync(
+                    sessionId,
+                    new JoinSessionOptions
+                    {
+                        Password = password.Trim()
+                    }
+                );
+
+            if (CurrentSession == null)
+                return false;
+
+            Debug.Log("Dołączono do: " + CurrentSession.Name);
+
+            StatusChanged?.Invoke("Połączono z pokojem.");
+            return true;
+        }
+        catch (SessionException e)
+        {
+            Debug.LogError(
+                "Nie udało się dołączyć do pokoju: " + e
+            );
+
+            StatusChanged?.Invoke(
+                "Błędne hasło lub nie można dołączyć do pokoju."
+            );
+
+            return false;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Błąd dołączania: " + e);
+
+            StatusChanged?.Invoke(
+                "Wystąpił błąd podczas dołączania."
+            );
+
+            return false;
+        }
+    }
+
     // =========================================================
     // LEAVE
     // =========================================================

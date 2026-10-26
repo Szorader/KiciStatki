@@ -1331,7 +1331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &230882903
 Transform:
   m_ObjectHideFlags: 0
@@ -9876,7 +9876,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2028002720
 Transform:
   m_ObjectHideFlags: 0
@@ -10217,6 +10217,8 @@ MonoBehaviour:
   lobbyItemPrefab: {fileID: -8052761468884628405, guid: 6e2fa0c9dfa1ff546a2ddab4a66004f0, type: 3}
   canvasOFF: {fileID: 2082021639}
   menuManager: {fileID: 2082021641}
+  createPasswordInput: {fileID: 1665321288}
+  joinPasswordInput: {fileID: 1799332070}
 --- !u!114 &2082021641
 MonoBehaviour:
   m_ObjectHideFlags: 0

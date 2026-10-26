@@ -235,6 +235,10 @@ public class LobbyUI : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject canvasOFF;
     [SerializeField] private MenuManager menuManager;
+    
+    [Header("HASŁA")]
+    [SerializeField] private TMP_InputField createPasswordInput;
+    [SerializeField] private TMP_InputField joinPasswordInput;
 
     private string selectedSessionId;
 
@@ -315,7 +319,11 @@ public class LobbyUI : MonoBehaviour
             return;
         }
 
-        bool success = await MultiplayerManager.Instance.CreateGame(gameName);
+        //bool success = await MultiplayerManager.Instance.CreateGame(gameName);
+        bool success = await MultiplayerManager.Instance.CreateGame(
+            gameName,
+            createPasswordInput.text
+        );
 
         if (success)
         {
@@ -353,10 +361,13 @@ public class LobbyUI : MonoBehaviour
             return;
         }
 
-        bool success = await MultiplayerManager.Instance.JoinGame(
+        /*bool success = await MultiplayerManager.Instance.JoinGame(
             selectedSessionId
+        );*/
+        bool success = await MultiplayerManager.Instance.JoinGame(
+            selectedSessionId,
+            joinPasswordInput.text
         );
-
         if (success)
         {
             Debug.Log("Pomyślnie dołączono do gry.");
