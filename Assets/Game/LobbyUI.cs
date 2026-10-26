@@ -234,6 +234,7 @@ public class LobbyUI : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private GameObject canvasOFF;
+    [SerializeField] private MenuManager menuManager;
 
     private string selectedSessionId;
 
@@ -304,6 +305,7 @@ public class LobbyUI : MonoBehaviour
 
     public async void CreateGame()
     {
+        menuManager.ShowCard(4);
         string gameName = gameNameInput.text.Trim();
 
         if (string.IsNullOrWhiteSpace(gameName))
@@ -323,6 +325,10 @@ public class LobbyUI : MonoBehaviour
                 canvasOFF.SetActive(false);
             }
         }
+        else
+        {
+            menuManager.ShowCard(2);
+        }
     }
 
     // =========================================================
@@ -338,6 +344,7 @@ public class LobbyUI : MonoBehaviour
 
     public async void JoinSelectedLobby()
     {
+        menuManager.ShowCard(4);
         if (string.IsNullOrEmpty(selectedSessionId))
         {
             Debug.LogError("Nie wybrano pokoju.");
@@ -352,6 +359,10 @@ public class LobbyUI : MonoBehaviour
         {
             Debug.Log("Pomyślnie dołączono do gry.");
             canvasOFF.SetActive(false);
+        }
+        else
+        {
+            menuManager.ShowCard(3);
         }
     }
 

@@ -16,7 +16,7 @@ public class NetworkBoardView : MonoBehaviour
 
     private NetworkPlayerBoard enemyBoard;
 
-    private const int BoardSize = 10;
+    private const int BoardSize = 8;
 
     private void Update()
     {
