@@ -58,7 +58,7 @@ public class BoardController : MonoBehaviour
     [Header("Ship Buttons")]
     [SerializeField] private Button[] shipButtons = new Button[5];
 
-    private const int BoardSize = 10;
+    private const int BoardSize = 8;
     private const int MaxShipSize = 5;
 
     public readonly CellState[,] grid =
