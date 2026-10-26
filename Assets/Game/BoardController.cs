@@ -29,6 +29,9 @@ public class BoardController : MonoBehaviour
     [SerializeField] private Tilemap backgroundTilemap;
     [SerializeField] private Tilemap shipsTilemap;
     [SerializeField] private TileBase emptyTile;
+    
+    [Header("Ship Preview")]
+    [SerializeField] private Tilemap shipPreviewTilemap;
 
     [Header("Ship 1")]
     [SerializeField] private TileBase ship1Tile;
@@ -324,45 +327,72 @@ public class BoardController : MonoBehaviour
     // PREVIEW
     // =========================================================
 
+    
+    private void SetPreviewTileRotation(
+        Vector3Int position,
+        int rotation)
+    {
+        Quaternion rotationQuaternion = Quaternion.Euler(
+            0f,
+            0f,
+            rotation * 90f
+        );
+
+        shipPreviewTilemap.SetTransformMatrix(
+            position,
+            Matrix4x4.TRS(
+                Vector3.zero,
+                rotationQuaternion,
+                Vector3.one
+            )
+        );
+    }
+
     private void ShowShipPreview()
     {
-        RefreshBoard();
+        if (shipPreviewTilemap == null)
+            return;
 
-        if (!CanPlaceShip(
+        // Czyścimy wyłącznie poprzedni podgląd.
+        shipPreviewTilemap.ClearAllTiles();
+
+        if (!placingShip)
+            return;
+
+        bool canPlace = CanPlaceShip(
             currentPosition,
             currentShipSize,
-            currentRotation))
-        {
-            return;
-        }
+            currentRotation
+        );
+
+        // Kolor całego podglądu:
+        // biały = można postawić
+        // czerwony = nie można postawić
+        shipPreviewTilemap.color = canPlace
+            ? Color.white
+            : Color.red;
 
         for (int i = 0; i < currentShipSize; i++)
         {
-            Vector2Int position =
-                GetShipCellPosition(i);
+            Vector2Int position = GetShipCellPosition(i);
 
-            Vector3Int tilePosition =
-                new Vector3Int(
-                    position.x,
-                    position.y,
-                    0
-                );
-
-            TileBase tile =
-                GetCurrentShipTile(i);
-
-            // STATEK TRAFIA TYLKO NA SHIPS TILEMAP
-            shipsTilemap.SetTile(
-                tilePosition,
-                tile
+            Vector3Int tilePosition = new Vector3Int(
+                position.x,
+                position.y,
+                0
             );
 
-            SetTileRotation(
+            TileBase tile = GetCurrentShipTile(i);
+
+            shipPreviewTilemap.SetTile(tilePosition, tile);
+
+            SetPreviewTileRotation(
                 tilePosition,
                 currentRotation
             );
         }
     }
+
 
     // =========================================================
     // SHIP POSITION
@@ -546,6 +576,12 @@ public class BoardController : MonoBehaviour
         shipsPlaced[currentShipSize - 1] = true;
 
         placingShip = false;
+        
+        if (shipPreviewTilemap != null)
+        {
+            shipPreviewTilemap.ClearAllTiles();
+            shipPreviewTilemap.color = Color.white;
+        }
 
         if (currentShipButton != null)
         {
