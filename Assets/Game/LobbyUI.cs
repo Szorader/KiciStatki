@@ -311,6 +311,7 @@ public class LobbyUI : MonoBehaviour
         if (string.IsNullOrWhiteSpace(gameName))
         {
             Debug.LogError("Podaj nazwę gry.");
+            menuManager.ShowCard(2);
             return;
         }
 
@@ -348,6 +349,7 @@ public class LobbyUI : MonoBehaviour
         if (string.IsNullOrEmpty(selectedSessionId))
         {
             Debug.LogError("Nie wybrano pokoju.");
+            menuManager.ShowCard(3);
             return;
         }
 

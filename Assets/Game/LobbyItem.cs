@@ -41,8 +41,8 @@ public class LobbyItem : MonoBehaviour
         {
             passwordText.text =
                 session.HasPassword
-                    ? "🔒 HASŁO"
-                    : "OTWARTY";
+                    ? "PASSWORD"
+                    : "OPEN";
         }
 
         if (joinButton != null)
