@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 717476570606428299}
   - component: {fileID: 525352682312870801}
   - component: {fileID: 377552737780810530}
+  - component: {fileID: 1372210991645469409}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -87,3 +88,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkBoardSync
   ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &1372210991645469409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083725185571257715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85552472329ab004cbadf7c420461902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerReady
+  ShowTopMostFoldoutHeaderGroup: 1
+  IsReady:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
+  GameStarted:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
