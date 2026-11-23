@@ -10700,9 +10700,9 @@ MonoBehaviour:
   missTile: {fileID: 11400000, guid: fb2a7e97a75389949989c49d423d9fe3, type: 2}
   hitTile: {fileID: 11400000, guid: f481a0c847abc074b9cb1433807bda1f, type: 2}
   sunkTile: {fileID: 11400000, guid: 7220021f7b0152944997a1a9a6c1d94d, type: 2}
-  playerMissTile: {fileID: 11400000, guid: fb2a7e97a75389949989c49d423d9fe3, type: 2}
-  playerHitTile: {fileID: 11400000, guid: f481a0c847abc074b9cb1433807bda1f, type: 2}
-  playerSunkTile: {fileID: 11400000, guid: 7220021f7b0152944997a1a9a6c1d94d, type: 2}
+  playerMissTile: {fileID: 11400000, guid: a62d9e5ec0e32ae4ca52472bed6da276, type: 2}
+  playerHitTile: {fileID: 11400000, guid: a62d9e5ec0e32ae4ca52472bed6da276, type: 2}
+  playerSunkTile: {fileID: 11400000, guid: a62d9e5ec0e32ae4ca52472bed6da276, type: 2}
 --- !u!1 &2139717546
 GameObject:
   m_ObjectHideFlags: 0
