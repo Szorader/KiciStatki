@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.Netcode;
 
 public class ReadyUI : MonoBehaviour
 {
@@ -14,26 +15,37 @@ public class ReadyUI : MonoBehaviour
 
     private void Start()
     {
-        readyButton.onClick.AddListener(OnReadyClicked);
+        if (readyButton != null)
+            readyButton.onClick.AddListener(OnReadyClicked);
 
         PlayerReady.StateChanged += RefreshUI;
     }
 
     private void Update()
     {
-        // Czekamy na pojawienie się lokalnego gracza
-        if (localPlayer == null)
+        // Szukamy lokalnego gracza.
+        if (localPlayer == null || !localPlayer.IsSpawned)
         {
-            PlayerReady[] players = FindObjectsOfType<PlayerReady>();
+            FindLocalPlayer();
+        }
 
-            foreach (PlayerReady player in players)
+        // Odświeżamy UI na bieżąco.
+        RefreshUI();
+    }
+
+    private void FindLocalPlayer()
+    {
+        PlayerReady[] players = FindObjectsByType<PlayerReady>(
+            FindObjectsInactive.Exclude,
+            FindObjectsSortMode.None
+        );
+
+        foreach (PlayerReady player in players)
+        {
+            if (player.IsSpawned && player.IsOwner)
             {
-                if (player.IsOwner && player.IsSpawned)
-                {
-                    localPlayer = player;
-                    RefreshUI();
-                    break;
-                }
+                localPlayer = player;
+                break;
             }
         }
     }
@@ -49,7 +61,13 @@ public class ReadyUI : MonoBehaviour
 
     private void RefreshUI()
     {
-        PlayerReady[] players = FindObjectsOfType<PlayerReady>();
+        if (playerStatusText == null)
+            return;
+
+        PlayerReady[] players = FindObjectsByType<PlayerReady>(
+            FindObjectsInactive.Exclude,
+            FindObjectsSortMode.None
+        );
 
         int readyCount = 0;
         int playerCount = 0;
@@ -66,29 +84,32 @@ public class ReadyUI : MonoBehaviour
         }
 
         bool started = localPlayer != null &&
+                       localPlayer.IsSpawned &&
                        localPlayer.GameStarted.Value;
 
-        if (localPlayer != null)
+        // Aktualizacja przycisku READY.
+        if (localPlayer != null && localPlayer.IsSpawned)
         {
-            readyButton.interactable =
-                !localPlayer.IsReady.Value && !started;
+            bool isReady = localPlayer.IsReady.Value;
 
-            readyButtonText.text =
-                localPlayer.IsReady.Value ? "READY!" : "READY";
+            if (readyButton != null)
+                readyButton.interactable = !isReady && !started;
+
+            if (readyButtonText != null)
+                readyButtonText.text = isReady ? "READY!" : "READY";
         }
 
+        // Po rozpoczęciu gry nie nadpisujemy tekstu.
+        // TurnStatusUI przejmuje wtedy wyświetlanie statusu.
         if (started)
-        {
-            playerStatusText.text = "GRA ROZPOCZĘTA!";
-        }
-        else
-        {
-            playerStatusText.text =
-                $"Gotowi gracze: {readyCount}/{2}\n" +
-                (playerCount < 2
-                    ? "Oczekiwanie na drugiego gracza..."
-                    : "Oczekiwanie na gotowość...");
-        }
+            return;
+
+        string waitingMessage = playerCount < 2
+            ? "Oczekiwanie na drugiego gracza..."
+            : "Oczekiwanie na gotowość...";
+
+        playerStatusText.text =
+            $"Gotowi gracze: {readyCount}/2\n{waitingMessage}";
     }
 
     private void OnDestroy()

@@ -61,7 +61,7 @@ public class BoardController : MonoBehaviour
     [Header("Ship Buttons")]
     [SerializeField] private Button[] shipButtons = new Button[5];
 
-    private const int BoardSize = 8;
+    public const int BoardSize = 8;
     private const int MaxShipSize = 5;
 
     public readonly CellState[,] grid =
@@ -75,6 +75,9 @@ public class BoardController : MonoBehaviour
 
     private readonly int[,] shipRotations =
         new int[BoardSize, BoardSize];
+    
+    private readonly byte[,] shipIds =
+        new byte[BoardSize, BoardSize];
 
     private readonly bool[] shipsPlaced =
         new bool[MaxShipSize];
@@ -197,6 +200,7 @@ public class BoardController : MonoBehaviour
                 shipParts[x, y] = ShipPart.None;
                 shipSizes[x, y] = 0;
                 shipRotations[x, y] = 0;
+                shipIds[x, y] = 0;
 
                 Vector3Int tilePosition =
                     new Vector3Int(x, y, 0);
@@ -556,13 +560,18 @@ public class BoardController : MonoBehaviour
             shipRotations[position.x, position.y] =
                 currentRotation;
 
+// Każde pole tego samego statku otrzymuje identyczne ID.
+            shipIds[position.x, position.y] =
+                (byte)currentShipSize;
+
             // Synchronizacja sieciowa
             if (NetworkBoardSync.LocalInstance != null)
             {
                 NetworkBoardSync.LocalInstance
                     .SendShipPosition(
                         position.x,
-                        position.y
+                        position.y,
+                        (byte)currentShipSize
                     );
             }
             else
@@ -850,5 +859,15 @@ public class BoardController : MonoBehaviour
                 Vector3.one
             )
         );
+    }
+    public byte GetShipId(int x, int y)
+    {
+        if (x < 0 || x >= BoardSize ||
+            y < 0 || y >= BoardSize)
+        {
+            return 0;
+        }
+
+        return shipIds[x, y];
     }
 }

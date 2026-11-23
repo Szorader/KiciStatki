@@ -110,6 +110,7 @@ public class NetworkBoardSync : NetworkBehaviour
         networkBoard.SetCellServerRpc(x, y);
     }
 }*/
+
 using Unity.Netcode;
 using UnityEngine;
 
@@ -120,13 +121,10 @@ public class NetworkBoardSync : NetworkBehaviour
     private NetworkPlayerBoard networkBoard;
     private BoardController boardController;
 
-    private const int BoardSize = 10;
-
     private void Awake()
     {
         Debug.Log(
-            $"NetworkBoardSync Awake | " +
-            $"GameObject: {gameObject.name}"
+            $"NetworkBoardSync Awake | GameObject: {gameObject.name}"
         );
 
         networkBoard = GetComponent<NetworkPlayerBoard>();
@@ -143,48 +141,25 @@ public class NetworkBoardSync : NetworkBehaviour
     {
         Debug.Log(
             $"NetworkBoardSync OnNetworkSpawn | " +
-            $"Object: {gameObject.name} | " +
             $"OwnerClientId: {OwnerClientId} | " +
-            $"LocalClientId: {NetworkManager.Singleton.LocalClientId} | " +
-            $"IsOwner: {IsOwner} | " +
-            $"IsServer: {IsServer} | " +
-            $"IsClient: {IsClient}"
+            $"IsOwner: {IsOwner}"
         );
 
         if (!IsOwner)
-        {
-            Debug.Log(
-                $"NetworkBoardSync: to nie jest mój Player Object. " +
-                $"Owner = {OwnerClientId}"
-            );
-
             return;
-        }
 
-        // To jest najważniejsze.
         LocalInstance = this;
-
-        Debug.Log(
-            "NetworkBoardSync: LocalInstance ZOSTAŁ ustawiony."
-        );
 
         FindBoardController();
 
-        // Dajemy chwilę na uruchomienie BoardController.
+        // Synchronizujemy planszę po krótkim opóźnieniu.
         Invoke(nameof(SyncExistingBoard), 0.5f);
     }
 
     public override void OnNetworkDespawn()
     {
-        Debug.Log(
-            $"NetworkBoardSync OnNetworkDespawn | " +
-            $"OwnerClientId: {OwnerClientId}"
-        );
-
         if (LocalInstance == this)
-        {
             LocalInstance = null;
-        }
     }
 
     private void FindBoardController()
@@ -195,13 +170,6 @@ public class NetworkBoardSync : NetworkBehaviour
         {
             Debug.LogError(
                 "NetworkBoardSync: NIE ZNALEZIONO BoardController!"
-            );
-        }
-        else
-        {
-            Debug.Log(
-                $"NetworkBoardSync: znaleziono BoardController: " +
-                $"{boardController.gameObject.name}"
             );
         }
     }
@@ -218,17 +186,14 @@ public class NetworkBoardSync : NetworkBehaviour
             return;
 
         if (networkBoard == null)
-        {
             networkBoard = GetComponent<NetworkPlayerBoard>();
 
-            if (networkBoard == null)
-            {
-                Debug.LogError(
-                    "NetworkBoardSync: nadal brak NetworkPlayerBoard!"
-                );
-
-                return;
-            }
+        if (networkBoard == null || !networkBoard.IsSpawned)
+        {
+            Debug.LogError(
+                "NetworkBoardSync: NetworkPlayerBoard nie jest gotowy!"
+            );
+            return;
         }
 
         Debug.Log(
@@ -237,15 +202,25 @@ public class NetworkBoardSync : NetworkBehaviour
 
         int count = 0;
 
-        for (int x = 0; x < BoardSize; x++)
+        for (int x = 0; x < BoardController.BoardSize; x++)
         {
-            for (int y = 0; y < BoardSize; y++)
+            for (int y = 0; y < BoardController.BoardSize; y++)
             {
-                if (boardController.grid[x, y] == CellState.Ship)
+                if (boardController.grid[x, y] != CellState.Ship)
+                    continue;
+
+                byte shipId = boardController.GetShipId(x, y);
+
+                if (shipId == 0)
                 {
-                    SendShipPosition(x, y);
-                    count++;
+                    Debug.LogError(
+                        $"Brak shipId dla pola {x}, {y}!"
+                    );
+                    continue;
                 }
+
+                SendShipPosition(x, y, shipId);
+                count++;
             }
         }
 
@@ -255,42 +230,19 @@ public class NetworkBoardSync : NetworkBehaviour
         );
     }
 
-    public void SendShipPosition(int x, int y)
+    public void SendShipPosition(int x, int y, byte shipId)
     {
         if (!IsOwner)
-        {
-            Debug.LogWarning(
-                "NetworkBoardSync.SendShipPosition: nie jestem właścicielem."
-            );
-
             return;
-        }
 
-        if (networkBoard == null)
-        {
-            networkBoard = GetComponent<NetworkPlayerBoard>();
-
-            if (networkBoard == null)
-            {
-                Debug.LogError(
-                    "NetworkBoardSync.SendShipPosition: brak NetworkPlayerBoard!"
-                );
-
-                return;
-            }
-        }
-
-        if (!networkBoard.IsSpawned)
-        {
-            Debug.LogWarning(
-                "NetworkBoardSync.SendShipPosition: " +
-                "NetworkPlayerBoard nie jest jeszcze Spawned!"
-            );
-
+        if (networkBoard == null || !networkBoard.IsSpawned)
             return;
-        }
 
-        networkBoard.SetCellServerRpc(x, y);
+        if (shipId == 0)
+            return;
+
+        networkBoard.SetCellServerRpc(x, y, shipId);
     }
 }
+
 

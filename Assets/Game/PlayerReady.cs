@@ -16,6 +16,28 @@ public class PlayerReady : NetworkBehaviour
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server
     );
+    
+    
+    public NetworkVariable<ulong> CurrentTurnOwnerId =
+        new NetworkVariable<ulong>(
+            ulong.MaxValue,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
+
+    public NetworkVariable<bool> GameOver =
+        new NetworkVariable<bool>(
+            false,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
+
+    public NetworkVariable<ulong> WinnerClientId =
+        new NetworkVariable<ulong>(
+            ulong.MaxValue,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
 
     public static event Action StateChanged;
 
@@ -42,12 +64,12 @@ public class PlayerReady : NetworkBehaviour
 
     private void OnGameStartedChanged(bool oldValue, bool newValue)
     {
-        StateChanged?.Invoke();
+        Debug.Log(
+            $"GAME STARTED CHANGED | Client: {NetworkManager.Singleton.LocalClientId} | " +
+            $"Owner: {OwnerClientId} | Old: {oldValue} | New: {newValue}"
+        );
 
-        if (newValue)
-        {
-            Debug.Log("ROZPOCZYNAMY GRĘ!");
-        }
+        StateChanged?.Invoke();
     }
 
     // Wywoływane po kliknięciu przycisku READY
@@ -58,10 +80,12 @@ public class PlayerReady : NetworkBehaviour
 
         SetReadyServerRpc();
     }
-
+    
     [ServerRpc]
     private void SetReadyServerRpc()
     {
+        Debug.Log($"Gracz {OwnerClientId} kliknął READY!");
+
         if (IsReady.Value || GameStarted.Value)
             return;
 
@@ -79,33 +103,130 @@ public class PlayerReady : NetworkBehaviour
         int playerCount = 0;
         int readyCount = 0;
 
-        foreach (NetworkObject obj in
-                 NetworkManager.Singleton.SpawnManager.SpawnedObjectsList)
+        foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
-            PlayerReady player = obj.GetComponent<PlayerReady>();
+            if (client.PlayerObject == null)
+                continue;
+
+            PlayerReady player = client.PlayerObject.GetComponent<PlayerReady>();
 
             if (player == null)
+            {
+                Debug.LogWarning($"Gracz {client.ClientId} nie ma komponentu PlayerReady!");
                 continue;
+            }
 
             playerCount++;
 
             if (player.IsReady.Value)
                 readyCount++;
+
+            Debug.Log(
+                $"Gracz ID: {client.ClientId} | Ready: {player.IsReady.Value}"
+            );
         }
 
-        // Musi być dokładnie dwóch graczy
+        Debug.Log($"LICZNIK GOTOWOŚCI: {readyCount}/{playerCount}");
+
         if (playerCount == 2 && readyCount == 2)
         {
-            foreach (NetworkObject obj in
-                     NetworkManager.Singleton.SpawnManager.SpawnedObjectsList)
+            foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
             {
-                PlayerReady player = obj.GetComponent<PlayerReady>();
+                if (client.PlayerObject == null)
+                    continue;
+
+                PlayerReady player = client.PlayerObject.GetComponent<PlayerReady>();
 
                 if (player != null)
                     player.GameStarted.Value = true;
             }
 
+            NetworkClient firstClient =
+                NetworkManager.Singleton.ConnectedClientsList[0];
+
+            SetTurnForAll(firstClient.ClientId);
+
             Debug.Log("OBYDWOJE GRACZE GOTOWI - START GRY!");
         }
     }
+    
+    
+    public static ulong GetCurrentTurnOwnerId()
+    {
+        PlayerReady[] players =
+            FindObjectsByType<PlayerReady>(
+                FindObjectsInactive.Exclude,
+                FindObjectsSortMode.None
+            );
+
+        foreach (PlayerReady player in players)
+        {
+            if (player.IsSpawned)
+                return player.CurrentTurnOwnerId.Value;
+        }
+
+        return ulong.MaxValue;
+    }
+
+    public static void SetTurnForAll(ulong clientId)
+    {
+        if (NetworkManager.Singleton == null ||
+            !NetworkManager.Singleton.IsServer)
+            return;
+
+        PlayerReady[] players =
+            FindObjectsByType<PlayerReady>(
+                FindObjectsInactive.Exclude,
+                FindObjectsSortMode.None
+            );
+
+        foreach (PlayerReady player in players)
+        {
+            if (player.IsSpawned)
+                player.CurrentTurnOwnerId.Value = clientId;
+        }
+
+        Debug.Log($"Aktualna tura gracza: {clientId}");
+    }
+    // =====================================================
+// KONIEC GRY
+// =====================================================
+
+    public static void SetGameOverForAll(ulong winnerId)
+    {
+        PlayerReady[] players =
+            FindObjectsByType<PlayerReady>(
+                FindObjectsInactive.Exclude,
+                FindObjectsSortMode.None
+            );
+
+        foreach (PlayerReady player in players)
+        {
+            if (!player.IsSpawned || !player.IsServer)
+                continue;
+
+            player.WinnerClientId.Value = winnerId;
+            player.GameOver.Value = true;
+        }
+
+        Debug.Log($"KONIEC GRY! Zwycięzca: {winnerId}");
+    }
+
+    public static bool HasGameEnded()
+    {
+        PlayerReady[] players =
+            FindObjectsByType<PlayerReady>(
+                FindObjectsInactive.Exclude,
+                FindObjectsSortMode.None
+            );
+
+        foreach (PlayerReady player in players)
+        {
+            if (player.IsSpawned && player.GameOver.Value)
+                return true;
+        }
+
+        return false;
+    }
+
 }
