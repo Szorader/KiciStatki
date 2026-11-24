@@ -363,6 +363,8 @@ using Unity.Services.Core;
 using Unity.Services.Multiplayer;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
+using UnityEngine.SceneManagement;
 
 public class MultiplayerManager : MonoBehaviour
 {
@@ -449,6 +451,11 @@ public class MultiplayerManager : MonoBehaviour
     
     public async Task<bool> CreateGame(string gameName, string password)
     {
+        /*if (isLeaving)
+        {
+            StatusChanged?.Invoke("Kończenie poprzedniej sesji...");
+            return false;
+        }*/
         if (!IsInitialized)
             await InitializeServices();
 
@@ -585,6 +592,11 @@ public class MultiplayerManager : MonoBehaviour
         string sessionId,
         string password)
     {
+       /* if (isLeaving)
+        {
+            StatusChanged?.Invoke("Kończenie poprzedniej sesji...");
+            return false;
+        }*/
         if (!IsInitialized)
             await InitializeServices();
 
@@ -653,9 +665,9 @@ public class MultiplayerManager : MonoBehaviour
     // =========================================================
 
     
-    private bool isLeaving;
+    //private bool isLeaving;
     
-    public async Task LeaveGame()
+   /* public async Task LeaveGame()
     {
         if (isLeaving)
             return;
@@ -683,12 +695,61 @@ public class MultiplayerManager : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             isLeaving = false;
         }
-    }
+    }*/
+   
+   
+   public bool IsLeaving { get; set; }
 
-    public async void LeaveGameButton()
-    {
-        await LeaveGame();
-    }
+   
+
+   /*public void LeaveGameButton()
+   {
+       if (isLeaving)
+           return;
+
+       isLeaving = true;
+
+       // Zachowujemy referencję do starej sesji.
+       ISession oldSession = CurrentSession;
+
+       // Natychmiast odłączamy ją od managera.
+       CurrentSession = null;
+
+       // Natychmiast wracamy do lobby.
+       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+       // Czyszczenie sieci odbywa się niezależnie.
+       _ = CleanupOldSession(oldSession);
+   }*/
+
+   /*private async Task CleanupOldSession(ISession session)
+   {
+       try
+       {
+           if (session == null)
+               return;
+
+           if (session.IsHost)
+           {
+               await session.AsHost().DeleteAsync();
+               Debug.Log("[LEAVE] Usunięto sesję hosta.");
+           }
+           else
+           {
+               await session.LeaveAsync();
+               Debug.Log("[LEAVE] Klient opuścił sesję.");
+           }
+       }
+       catch (Exception e)
+       {
+           Debug.LogError("[LEAVE] Cleanup error: " + e);
+       }
+       finally
+       {
+           //isLeaving = false;
+       }
+   }*/
+
 
 
     // =========================================================
