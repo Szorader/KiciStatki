@@ -362,6 +362,7 @@ using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Multiplayer;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MultiplayerManager : MonoBehaviour
 {
@@ -651,29 +652,44 @@ public class MultiplayerManager : MonoBehaviour
     // LEAVE
     // =========================================================
 
+    
+    private bool isLeaving;
+    
     public async Task LeaveGame()
     {
-        if (CurrentSession == null)
+        if (isLeaving)
             return;
+
+        isLeaving = true;
+
+        ISession session = CurrentSession;
+        CurrentSession = null;
 
         try
         {
-            await CurrentSession.LeaveAsync();
+            if (session != null)
+            {
+                await session.LeaveAsync();
 
-            CurrentSession = null;
-
-            Debug.Log(
-                "Opuszczono pokój."
-            );
+                Debug.Log("Opuszczono pokój.");
+            }
         }
         catch (Exception e)
         {
-            Debug.LogError(
-                "Błąd opuszczania pokoju:\n" +
-                e
-            );
+            Debug.LogError("Błąd opuszczania pokoju:\n" + e);
+        }
+        finally
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            isLeaving = false;
         }
     }
+
+    public async void LeaveGameButton()
+    {
+        await LeaveGame();
+    }
+
 
     // =========================================================
     // DESTROY
